@@ -1,0 +1,206 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <ContentTargetFolders>tools</ContentTargetFolders>
+    <DevelopmentDependency>True</DevelopmentDependency>
+    <IncludeBuildOutput>False</IncludeBuildOutput>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>R4Mvc.CoreTools</PackageId>
+    <Authors>Kevin Kuszyk, Scott Mackay, Artiom Chilaru</Authors>
+    <PackageLicenseUrl>https://github.com/T4MVC/R4MVC/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/T4MVC/R4MVC</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/T4MVC/R4MVC</RepositoryUrl>
+    <Title>R4Mvc Tools</Title>
+    <Description>R4Mvc is a tool that generates strongly typed helpers for ASP.NET Core MVC.</Description>
+    <PackageTags>aspnetcore mvc r4mvc</PackageTags>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <AssemblyVersion Condition="$(BuildNumber) != ''">$(VersionPrefix).$(BuildNumber)</AssemblyVersion>
+    <PackageReleaseNotes>
++ Adding the option to add extra namespaces to generated files
+! Now working with multi-targeted projects (#66)
++ Now available as a dotnet cli tool (see R4Mvc.Tools.Cli package)
+    </PackageReleaseNotes>
+    <PackOnBuild>true</PackOnBuild>
+    <PackageVersion>1.0.0.0</PackageVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <IsPackable>true</IsPackable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType></DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="2.9.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="2.9.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="2.1.1" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1" PrivateAssets="All" />
+    <PackageReference Include="System.Threading.Tasks.Dataflow" Version="4.9.0" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\R4Mvc\R4Mvc.csproj" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\R4Mvc.Tools\CodeGen\BodyBuilder.cs">
+      <Link>CodeGen\BodyBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\CodeGen\ClassBuilder.cs">
+      <Link>CodeGen\ClassBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\CodeGen\CodeFileBuilder.cs">
+      <Link>CodeGen\CodeFileBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\CodeGen\ConstructorMethodBuilder.cs">
+      <Link>CodeGen\ConstructorMethodBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\CodeGen\MethodBuilder.cs">
+      <Link>CodeGen\MethodBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\CodeGen\SimpleLiteral.cs">
+      <Link>CodeGen\SimpleLiteral.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Commands\GenerateCommand.cs">
+      <Link>Commands\GenerateCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Commands\HelpCommand.cs">
+      <Link>Commands\HelpCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Commands\RemoveCommand.cs">
+      <Link>Commands\RemoveCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Commands\VSInstancesCommand.cs">
+      <Link>Commands\VSInstancesCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Commands\Core\CommandResolver.cs">
+      <Link>Commands\Core\CommandResolver.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Commands\Core\ICommand.cs">
+      <Link>Commands\Core\ICommand.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Commands\Core\ICommandRunner.cs">
+      <Link>Commands\Core\ICommandRunner.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Extensions\SimpleExtensions.cs">
+      <Link>Extensions\SimpleExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Extensions\SyntaxNodeHelpers.cs">
+      <Link>Extensions\SyntaxNodeHelpers.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Locators\DefaultRazorPageViewLocator.cs">
+      <Link>Locators\DefaultRazorPageViewLocator.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Locators\DefaultRazorViewLocator.cs">
+      <Link>Locators\DefaultRazorViewLocator.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Locators\DefaultStaticFileLocator.cs">
+      <Link>Locators\DefaultStaticFileLocator.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Locators\FeatureFolderRazorViewLocator.cs">
+      <Link>Locators\FeatureFolderRazorViewLocator.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Locators\IFileLocator.cs">
+      <Link>Locators\IFileLocator.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Locators\IPageViewLocator.cs">
+      <Link>Locators\IPageViewLocator.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Locators\IStaticFileLocator.cs">
+      <Link>Locators\IStaticFileLocator.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Locators\IViewLocator.cs">
+      <Link>Locators\IViewLocator.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Locators\PhysicalFileLocator.cs">
+      <Link>Locators\PhysicalFileLocator.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Services\ControllerGeneratorService.cs">
+      <Link>Services\ControllerGeneratorService.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Services\ControllerRewriterService.cs">
+      <Link>Services\ControllerRewriterService.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Services\FilePersistService.cs">
+      <Link>Services\FilePersistService.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Services\GeneratedFileTesterService.cs">
+      <Link>Services\GeneratedFileTesterService.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Services\IControllerGeneratorService.cs">
+      <Link>Services\IControllerGeneratorService.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Services\IControllerRewriterService.cs">
+      <Link>Services\IControllerRewriterService.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Services\IFilePersistService.cs">
+      <Link>Services\IFilePersistService.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Services\IGeneratedFileTesterService.cs">
+      <Link>Services\IGeneratedFileTesterService.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Services\IPageGeneratorService.cs">
+      <Link>Services\IPageGeneratorService.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Services\IPageRewriterService.cs">
+      <Link>Services\IPageRewriterService.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Services\IStaticFileGeneratorService.cs">
+      <Link>Services\IStaticFileGeneratorService.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Services\PageGeneratorService.cs">
+      <Link>Services\PageGeneratorService.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Services\PageRewriterService.cs">
+      <Link>Services\PageRewriterService.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Services\R4MvcGeneratorService.cs">
+      <Link>Services\R4MvcGeneratorService.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Services\StaticFileGeneratorService.cs">
+      <Link>Services\StaticFileGeneratorService.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Constants.cs">
+      <Link>Constants.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\ControllerDefinition.cs">
+      <Link>ControllerDefinition.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\ControllerRewriter.cs">
+      <Link>ControllerRewriter.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\IView.cs">
+      <Link>IView.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\PageDefinition.cs">
+      <Link>PageDefinition.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\PageRewriter.cs">
+      <Link>PageRewriter.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\PageView.cs">
+      <Link>PageView.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Program.cs">
+      <Link>Program.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\Settings.cs">
+      <Link>Settings.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\StaticFile.cs">
+      <Link>StaticFile.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc.Tools\View.cs">
+      <Link>View.cs</Link>
+    </Compile>
+  </ItemGroup>
+</Project>

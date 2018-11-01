@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+#if !NETCOREAPP
 using Microsoft.Build.Locator;
+#endif
 using Microsoft.Extensions.Configuration;
 using R4Mvc.Tools.Commands.Core;
 
@@ -24,6 +26,7 @@ showpath:
         {
             public Task Run(string projectPath, IConfiguration configuration, string[] args)
             {
+#if !NETCOREAPP
                 var showPath = configuration.GetValue<bool?>("showPath") ?? false;
 
                 var instances = MSBuildLocator.QueryVisualStudioInstances().ToArray();
@@ -44,6 +47,7 @@ showpath:
                         Console.WriteLine();
                     }
                 }
+#endif
                 return Task.CompletedTask;
             }
         }

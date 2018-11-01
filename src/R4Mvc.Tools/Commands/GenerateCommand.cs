@@ -4,7 +4,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+#if !NETCOREAPP
 using Microsoft.Build.Locator;
+#endif
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.MSBuild;
 using Microsoft.Extensions.Configuration;
@@ -58,10 +60,12 @@ project-path:
             {
                 var sw = Stopwatch.StartNew();
 
+#if !NETCOREAPP
                 var vsInstance = InitialiseMSBuild(configuration);
                 Console.WriteLine($"Using: {vsInstance.Name} - {vsInstance.Version}");
                 Console.WriteLine("Project: " + projectPath);
                 Console.WriteLine();
+#endif
 
                 // Load the project and check for compilation errors
                 Console.WriteLine("Creating Workspace ...");
@@ -176,6 +180,7 @@ project-path:
                 Console.WriteLine($"Operation completed in {sw.Elapsed}");
             }
 
+#if !NETCOREAPP
             private VisualStudioInstance InitialiseMSBuild(IConfiguration configuration)
             {
                 var instances = MSBuildLocator.QueryVisualStudioInstances().ToArray();
@@ -205,6 +210,7 @@ project-path:
 
                 return instance;
             }
+#endif
 
             public IDictionary<string, string> GenerateAreaMap(IEnumerable<ControllerDefinition> controllers)
             {
