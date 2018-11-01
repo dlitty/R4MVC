@@ -10,11 +10,6 @@ namespace R4Mvc.Tools.Cli
     {
         static void Main(string[] args)
         {
-            if (Environment.OSVersion.Platform != PlatformID.Win32NT)
-            {
-                Console.WriteLine("Sorry, this tol is only available on Windows based platforms at this time.");
-                return;
-            }
             var currentPath = Path.GetDirectoryName(typeof(Program).Assembly.Location);
             var toolPath = Path.Combine(currentPath, "..", "..", "R4Mvc.Tools.exe");
 

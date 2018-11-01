@@ -2,17 +2,16 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net462</TargetFramework>
+    <TargetFrameworks>netcoreapp2.1;net462</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <ContentTargetFolders>tools</ContentTargetFolders>
     <DevelopmentDependency>True</DevelopmentDependency>
     <IncludeBuildOutput>False</IncludeBuildOutput>
   </PropertyGroup>
-
+	
   <PropertyGroup>
     <PackageId>R4Mvc.Tools</PackageId>
     <Authors>Kevin Kuszyk, Scott Mackay, Artiom Chilaru</Authors>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageLicenseUrl>https://github.com/T4MVC/R4MVC/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/T4MVC/R4MVC</PackageProjectUrl>
     <RepositoryUrl>https://github.com/T4MVC/R4MVC</RepositoryUrl>
@@ -26,8 +25,22 @@
 ! Now working with multi-targeted projects (#66)
 + Now available as a dotnet cli tool (see R4Mvc.Tools.Cli package)
     </PackageReleaseNotes>
+    <PackOnBuild>true</PackOnBuild>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(BuildNumber)'==''">
+		<BuildNumber>0</BuildNumber>
+  </PropertyGroup>
+	
+  <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp2.1'">
+     <IsPackable>true</IsPackable>
+     <PackAsTool>true</PackAsTool>
+	 <ToolCommandName>dotnet-r4mvc</ToolCommandName>
+	 <Version>$(VersionPrefix).$(BuildNumber)</Version>
+	 <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+  </PropertyGroup>
+  
+	
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <IsPackable>true</IsPackable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -50,13 +63,20 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.0" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.Build.Locator" Version="1.0.31" PrivateAssets="All" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="2.9.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="2.9.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="2.1.1" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1" PrivateAssets="All" />
     <PackageReference Include="System.Threading.Tasks.Dataflow" Version="4.9.0" PrivateAssets="All" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)'=='net461'">
+	<DefineConstants>$(DefineConstants);NET461</DefineConstants>
+  </PropertyGroup>
+	
+  <ItemGroup Condition="'$(TargetFramework)'=='net461'">
+    <PackageReference Include="Microsoft.Build.Locator" Version="1.0.31" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
