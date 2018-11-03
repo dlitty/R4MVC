@@ -2,14 +2,8 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
+	<LangVersion>latest</LangVersion>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <LangVersion>latest</LangVersion>
-    <ContentTargetFolders>tools</ContentTargetFolders>
-    <DevelopmentDependency>True</DevelopmentDependency>
-    <IncludeBuildOutput>False</IncludeBuildOutput>
-  </PropertyGroup>
-
-  <PropertyGroup>
     <PackageId>R4Mvc.CoreTools</PackageId>
     <Authors>Kevin Kuszyk, Scott Mackay, Artiom Chilaru</Authors>
     <PackageLicenseUrl>https://github.com/T4MVC/R4MVC/blob/master/LICENSE</PackageLicenseUrl>
@@ -25,18 +19,24 @@
 ! Now working with multi-targeted projects (#66)
 + Now available as a dotnet cli tool (see R4Mvc.Tools.Cli package)
     </PackageReleaseNotes>
-    <PackOnBuild>true</PackOnBuild>
-    <PackageVersion>1.0.0.0</PackageVersion>
+    <PackageVersion>$(VersionPrefix).0</PackageVersion>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+  <PropertyGroup>
     <IsPackable>true</IsPackable>
+	<PackAsTool>true</PackAsTool>
+	<ToolCommandName>dotnet-r4mvc</ToolCommandName>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType></DebugType>
   </PropertyGroup>
+	
+  <PropertyGroup>
+	<DisableMSBuildAssemblyCopyCheck>false</DisableMSBuildAssemblyCopyCheck>
+  </PropertyGroup>
+	
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="2.9.0" PrivateAssets="All" />
@@ -45,10 +45,11 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1" PrivateAssets="All" />
     <PackageReference Include="System.Threading.Tasks.Dataflow" Version="4.9.0" PrivateAssets="All" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\R4Mvc\R4Mvc.csproj" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Build" Version="15.8.166" ExcludeAssets="runtime" />
+    <PackageReference Include="Microsoft.Build.Runtime" Version="15.8.166" ExcludeAssets="runtime" />
+    <PackageReference Include="NuGet.Core" Version="2.14.0" />
+    <PackageReference Include="NuGet.PackageManagement.VisualStudio" Version="4.8.0" />
+    <PackageReference Include="Microsoft.Build.Locator" Version="1.0.31" />
   </ItemGroup>
 
   <ItemGroup>
@@ -202,5 +203,8 @@
     <Compile Include="..\R4Mvc.Tools\View.cs">
       <Link>View.cs</Link>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\R4Mvc.Core\R4Mvc.Core.csproj" />
   </ItemGroup>
 </Project>

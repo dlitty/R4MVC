@@ -1,0 +1,75 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\R4Mvc.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)'!='netstandard1.6'">
+    <DefineConstants>$(DefineConstants);CORE2</DefineConstants>
+  </PropertyGroup>
+
+
+  <ItemGroup Condition="$(DefineConstants.Contains('CORE2'))">
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.TagHelpers" Version="2.1.0" />
+    <PackageReference Include="NuGet.Build.Packaging" Version="0.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\R4Mvc\IR4ActionResult.cs">
+      <Link>IR4ActionResult.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc\IR4MvcActionResult.cs">
+      <Link>IR4MvcActionResult.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc\IR4PageActionResult.cs">
+      <Link>IR4PageActionResult.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc\ModelUnbinderHelpers.cs">
+      <Link>ModelUnbinderHelpers.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc\R4MVCExcludeAttribute.cs">
+      <Link>R4MVCExcludeAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc\T4Extensions.cs">
+      <Link>T4Extensions.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc\ModelUnbinders\DefaultModelUnbinder.cs">
+      <Link>ModelUnbinders\DefaultModelUnbinder.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc\ModelUnbinders\IModelUnbinder.cs">
+      <Link>ModelUnbinders\IModelUnbinder.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc\ModelUnbinders\IModelUnbinderProvider.cs">
+      <Link>ModelUnbinders\IModelUnbinderProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc\ModelUnbinders\ModelUnbinderProviders.cs">
+      <Link>ModelUnbinders\ModelUnbinderProviders.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc\ModelUnbinders\ModelUnbinders.cs">
+      <Link>ModelUnbinders\ModelUnbinders.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc\Rendering\HtmlHelperExtensions.cs">
+      <Link>Rendering\HtmlHelperExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc\Rendering\UrlHelperExtensions.cs">
+      <Link>Rendering\UrlHelperExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc\TagHelpers\AnchorTagHelper.cs">
+      <Link>TagHelpers\AnchorTagHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc\TagHelpers\FormTagHelper.cs">
+      <Link>TagHelpers\FormTagHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc\TagHelpers\ImageTagHelper.cs">
+      <Link>TagHelpers\ImageTagHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc\TagHelpers\LinkTagHelper.cs">
+      <Link>TagHelpers\LinkTagHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\R4Mvc\TagHelpers\ScriptTagHelper.cs">
+      <Link>TagHelpers\ScriptTagHelper.cs</Link>
+    </Compile>
+  </ItemGroup>
+</Project>
