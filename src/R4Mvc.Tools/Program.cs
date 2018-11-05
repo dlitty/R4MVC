@@ -18,6 +18,8 @@ namespace R4Mvc.Tools
     {
         static async Task Main(string[] args)
         {
+            Console.WriteLine($"MSBUILD_NUGET_PATH: {Environment.GetEnvironmentVariable("MSBUILD_NUGET_PATH")}");
+            Console.WriteLine($"MSBUILD_EXE_PATH: {Environment.GetEnvironmentVariable("MSBUILD_EXE_PATH")}");
             Console.WriteLine($"  R4Mvc Generator Tool v{GetVersion()}");
             Console.WriteLine();
 

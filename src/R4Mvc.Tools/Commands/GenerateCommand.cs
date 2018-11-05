@@ -4,9 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-#if !NETCOREAPP
-using Microsoft.Build.Locator;
-#endif
+using Microsoft.Build.MSBuildLocator;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.MSBuild;
 using Microsoft.Extensions.Configuration;
@@ -60,20 +58,20 @@ project-path:
             {
                 var sw = Stopwatch.StartNew();
 
-#if !NETCOREAPP
                 var vsInstance = InitialiseMSBuild(configuration);
                 Console.WriteLine($"Using: {vsInstance.Name} - {vsInstance.Version}");
                 Console.WriteLine("Project: " + projectPath);
                 Console.WriteLine();
-#endif
 
                 // Load the project and check for compilation errors
                 Console.WriteLine("Creating Workspace ...");
                 var workspace = MSBuildWorkspace.Create(new Dictionary<string, string> { ["IsR4MvcBuild"] = "true" });
 
-                Console.WriteLine("Loading project ...");
+                Console.WriteLine($"Loading project {projectPath} ...");
                 var projectRoot = Path.GetDirectoryName(projectPath);
                 var project = await workspace.OpenProjectAsync(projectPath);
+
+                Console.WriteLine("Project opened ...");
                 if (workspace.Diagnostics.Count > 0)
                 {
                     var foundErrors = false;
@@ -180,12 +178,11 @@ project-path:
                 Console.WriteLine($"Operation completed in {sw.Elapsed}");
             }
 
-#if !NETCOREAPP
-            private VisualStudioInstance InitialiseMSBuild(IConfiguration configuration)
+            private MSBuildInstance InitialiseMSBuild(IConfiguration configuration)
             {
-                var instances = MSBuildLocator.QueryVisualStudioInstances().ToArray();
+                var instances = MSBuildLocator.GetAllMSBuildInstances().ToArray();
                 if (instances.Length == 0)
-                    Console.WriteLine("No Visual Studio instances found. The code generation might fail");
+                    Console.WriteLine("No MS Build instances found. The code generation might fail");
 
                 var vsInstanceIndex = configuration.GetValue<int?>("vsinstance") ?? 0;
                 if (vsInstanceIndex < 0 || vsInstanceIndex > instances.Length)
@@ -194,7 +191,7 @@ project-path:
                     vsInstanceIndex = 0;
                 }
 
-                VisualStudioInstance instance;
+                MSBuildInstance instance;
                 if (vsInstanceIndex > 0)
                 {
                     // Register the selected vs instance. This will cause MSBuildWorkspace to use the MSBuild installed in that instance.
@@ -210,7 +207,6 @@ project-path:
 
                 return instance;
             }
-#endif
 
             public IDictionary<string, string> GenerateAreaMap(IEnumerable<ControllerDefinition> controllers)
             {
